@@ -10,6 +10,8 @@ package Plane_Ticket_Booking_System;
  */
 public class Main {
     public static void main(String[] args) {
-        Login login = new Login();
+        
+        AccountManager accountManager = new AccountManager();
+        Login login = new Login(accountManager);
     }
 }

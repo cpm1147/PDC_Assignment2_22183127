@@ -23,15 +23,19 @@ import javax.swing.JTextField;
  */
 public class Login extends JFrame implements ActionListener{
     
+    JFrame frame;
     JPasswordField password;
     JTextField username;
     JLabel label_password, label_username, message, title;
-    JButton button;
+    JButton loginButton, createAccount;
     JCheckBox showPassword;
+    AccountManager manager;
     
-    public Login()
+    public Login(AccountManager manager)
     {
-        JFrame frame = new JFrame("Plane Ticket Booking System");
+        this.manager = manager;
+        
+        frame = new JFrame("Plane Ticket Booking System");
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
         
@@ -71,9 +75,13 @@ public class Login extends JFrame implements ActionListener{
         showPassword.setBounds(300, 150, 200, 40);
         showPassword.addActionListener(this);
         
-        button = new JButton("Sign in");
-        button.setBounds(300, 220, 200, 40);
-        button.addActionListener(this);
+        loginButton = new JButton("Sign in");
+        loginButton.setBounds(300, 220, 150, 20);
+        loginButton.addActionListener(this);
+        
+        createAccount = new JButton("Create account");
+        createAccount.setBounds(450, 220, 150, 20);
+        createAccount.addActionListener(this);
         
         frame.add(title);
         frame.add(label_username);
@@ -82,7 +90,8 @@ public class Login extends JFrame implements ActionListener{
         frame.add(label_password);
         frame.add(password);
         frame.add(showPassword);
-        frame.add(button);
+        frame.add(loginButton);
+        frame.add(createAccount);
         
         frame.setLayout(null);
         frame.setVisible(true); 
@@ -91,15 +100,17 @@ public class Login extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        if(e.getSource()==button)
+        if(e.getSource()==loginButton)
         {
             String usernameText = username.getText();
             String passwordText = new String(password.getPassword());
             
-            if(usernameText.equals("Kelly") && passwordText.equals("Pass"))
+            if(manager.userNameChecker(usernameText) && manager.passwordChecker(usernameText, passwordText))
                     {
                         message.setText("You successfully logged in");
                         message.setForeground(Color.GREEN);
+                        frame.dispose();
+                        BookingPage bookingPage = new BookingPage();
                     }
             else {
                 message.setText("Invalid username or password");
@@ -116,6 +127,11 @@ public class Login extends JFrame implements ActionListener{
             else {
                 password.setEchoChar('*');
             }
+        }
+        
+        if(e.getSource() == createAccount)
+        {
+            CreateAccountPage createAccount = new CreateAccountPage(manager);
         }
     }
     
