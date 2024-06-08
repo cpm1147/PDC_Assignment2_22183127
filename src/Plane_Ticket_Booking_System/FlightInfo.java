@@ -11,12 +11,6 @@ package Plane_Ticket_Booking_System;
 public class FlightInfo {
     String origin;
     String destination;
-    boolean trip;
-    String date;
-    int passengerAdult;
-    int passengerChild;
-    int passengerInfant;
-    String serviceClass;
     String planeId;
     
 }

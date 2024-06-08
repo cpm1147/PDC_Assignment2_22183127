@@ -10,4 +10,5 @@ package Plane_Ticket_Booking_System;
  */
 public class Seat {
     String seatId;
+    boolean availability;
 }

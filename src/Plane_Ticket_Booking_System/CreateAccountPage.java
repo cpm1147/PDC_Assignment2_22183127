@@ -151,10 +151,8 @@ public class CreateAccountPage extends JFrame implements ActionListener {
                 manager.addAccount(account);
                 dispose();
             } catch (NumberFormatException ex) {
-                // Handle invalid mobile number format
                 System.out.println("Invalid mobile number");
-            }
-            
+            }            
         }
     }
 }

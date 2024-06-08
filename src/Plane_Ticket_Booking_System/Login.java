@@ -110,7 +110,7 @@ public class Login extends JFrame implements ActionListener{
                         message.setText("You successfully logged in");
                         message.setForeground(Color.GREEN);
                         frame.dispose();
-                        BookingPage bookingPage = new BookingPage();
+                        MainPage mainPage = new MainPage();
                     }
             else {
                 message.setText("Invalid username or password");

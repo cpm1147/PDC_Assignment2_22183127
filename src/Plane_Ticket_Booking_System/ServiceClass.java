@@ -9,7 +9,19 @@ package Plane_Ticket_Booking_System;
  * @author willi
  */
 public enum ServiceClass {
-    ECONOMY,
-    PREMIUM_ECONOMY,
-    BUSINESS_CLASS
+    ECONOMY("Economy - lowest"),
+    PREMIUM_ECONOMY("Premium Economy"),
+    BUSINESS_CLASS("Business Class");
+    
+    private final String display;
+    
+    private ServiceClass(String display){
+        this.display = display;
+    }
+        
+    @Override
+    public String toString()
+    {
+        return this.display;
+    }
 }
