@@ -26,21 +26,32 @@ public class MainPage implements ActionListener{
     JFrame frame;
     JLabel bookFlightLabel, fromLabel, toLabel, fromDateLabel, toDateLabel, serviceClassLabel;
     JPanel bookingPanel, menuPanel;
-    JComboBox toLocation, fromLocation;
+    JComboBox<String> toLocation, fromLocation;
     JComboBox<ServiceClass> serviceClass;    
     JDateChooser fromDate, toDate;
-    JButton search;
+    JButton search, viewBookings, signOut;
+    private FlightManager flightManager;
     
     
     
     public MainPage()
     {        
+        flightManager = new FlightManager();
+        
         frame = new JFrame("Main Page");
                
         menuPanel = new JPanel();
         menuPanel.setBackground(Color.black);  
         menuPanel.setPreferredSize(new Dimension(1281, 30));
         menuPanel.setLayout(null);
+        
+        viewBookings = new JButton("View Bookings");
+        viewBookings.setBounds(10, 5, 130, 20);
+        viewBookings.addActionListener(this);
+        
+        signOut = new JButton("Sign out");
+        signOut.setBounds(1173, 5, 100, 20);
+        signOut.addActionListener(this);
         
         bookingPanel = new JPanel();
         bookingPanel.setBackground(Color.black);  
@@ -52,7 +63,7 @@ public class MainPage implements ActionListener{
         bookFlightLabel.setFont(new Font("Arial", Font.BOLD, 16));
         bookFlightLabel.setForeground(Color.white);        
                 
-        String[] origin = {"Auckland", "ChristChurch", "Wellington"};
+        String[] origin = {"Auckland"};
         String[] destination = {"Melbourne", "Sydney"};
         
         fromLabel = new JLabel("From");
@@ -60,7 +71,7 @@ public class MainPage implements ActionListener{
         fromLabel.setFont(new Font("Arial", Font.BOLD, 12));
         fromLabel.setForeground(Color.white);
         
-        fromLocation = new JComboBox(origin);
+        fromLocation = new JComboBox<>(origin);
         fromLocation.setBounds(80, 70, 250, 20);
                
         toLabel = new JLabel("To");
@@ -68,7 +79,7 @@ public class MainPage implements ActionListener{
         toLabel.setFont(new Font("Arial", Font.BOLD, 12));
         toLabel.setForeground(Color.white);
         
-        toLocation = new JComboBox(destination);
+        toLocation = new JComboBox<>(destination);
         toLocation.setBounds(380, 70, 250, 20);
         
         fromDateLabel = new JLabel("Leave on");
@@ -115,6 +126,9 @@ public class MainPage implements ActionListener{
         grid2.anchor = GridBagConstraints.CENTER;
         grid2.fill = GridBagConstraints.NONE;
       
+        menuPanel.add(viewBookings);
+        menuPanel.add(signOut);
+        
         bookingPanel.add(bookFlightLabel);
         bookingPanel.add(fromLocation);
         bookingPanel.add(toLocation);
@@ -139,10 +153,19 @@ public class MainPage implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == search)
+        
+        if(e.getSource() == viewBookings)
         {
-            BookingPage bookingPage = new BookingPage();
+            
+        }
+        
+        if (e.getSource() == search) {
+            String destination = (String) toLocation.getSelectedItem();
+            if (destination != null) {
+                BookingPage page = new BookingPage(flightManager, destination);
+            }
+            
+        
         }
     }
-    
 }
