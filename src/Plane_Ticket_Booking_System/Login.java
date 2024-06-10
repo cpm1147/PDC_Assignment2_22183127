@@ -62,14 +62,14 @@ public class Login extends JFrame implements ActionListener{
         label_password.setFont(new Font("Arial", Font.BOLD, 16));
         label_password.setForeground(Color.BLUE);
         
-        message = new JLabel("Message Here");
+        message = new JLabel(" ");
         message.setBounds(300, 250, 300, 40);
         
         username = new JTextField();
         username.setBounds(300, 50, 300, 40);
         
         password = new JPasswordField();
-        password.setBounds(300, 100, 200, 40);
+        password.setBounds(300, 100, 300, 40);
         
         showPassword = new JCheckBox("Show Password");
         showPassword.setBounds(300, 150, 200, 40);
@@ -108,14 +108,19 @@ public class Login extends JFrame implements ActionListener{
             if(manager.userNameChecker(usernameText) && manager.passwordChecker(usernameText, passwordText))
                     {
                         message.setText("You successfully logged in");
-                        message.setForeground(Color.GREEN);
+                        message.setForeground(Color.GREEN);   
+                        
+                        Account loggedInAccount = manager.getAccountByUsername(usernameText);
+                        
+                        MainPage mainPage = new MainPage(loggedInAccount);
                         frame.dispose();
-                        MainPage mainPage = new MainPage();
                     }
             else {
-                message.setText("Invalid username or password");
+                message.setText("Invalid username or password. Please try again.");
                 message.setForeground(Color.RED);
-            }
+                username.setText("");
+                password.setText("");
+                }
         }
         
         if(e.getSource() == showPassword)
@@ -134,5 +139,4 @@ public class Login extends JFrame implements ActionListener{
             CreateAccountPage createAccount = new CreateAccountPage(manager);
         }
     }
-    
 }

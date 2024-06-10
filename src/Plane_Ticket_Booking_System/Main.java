@@ -12,9 +12,6 @@ public class Main {
     
     public static void main(String[] args) {
         AccountManager accountManager = new AccountManager();
-        FlightManager flightManager = new FlightManager();
         Login login = new Login(accountManager);
-        
-        //MainPage main = new MainPage();
     }
 }

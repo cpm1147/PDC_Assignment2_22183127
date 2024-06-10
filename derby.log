@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Jun 10 17:48:41 NZST 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0190-00b1-0b3d-000006483d48 
+on database directory C:\Users\willi\OneDrive\Documents\NetBeansProjects\PDC_Project_2\PlaneBookingDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@18ef96 
+Loaded from file:/C:/Users/willi/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=11.0.21+9-LTS-193
+user.dir=C:\Users\willi\OneDrive\Documents\NetBeansProjects\PDC_Project_2
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

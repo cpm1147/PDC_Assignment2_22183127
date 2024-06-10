@@ -16,7 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import com.toedter.calendar.JDateChooser;
+import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 /**
  *
  * @author willi
@@ -31,12 +33,15 @@ public class MainPage implements ActionListener{
     JDateChooser fromDate, toDate;
     JButton search, viewBookings, signOut;
     private FlightManager flightManager;
+    private Account loggedInAccount;
+    private DatabaseManager dbManager;
     
     
-    
-    public MainPage()
+    public MainPage(Account loggedInAccount)
     {        
+        this.loggedInAccount = loggedInAccount;
         flightManager = new FlightManager();
+        dbManager = new DatabaseManager();
         
         frame = new JFrame("Main Page");
                
@@ -156,16 +161,34 @@ public class MainPage implements ActionListener{
         
         if(e.getSource() == viewBookings)
         {
-            
+            SQLTable sqlTable = new SQLTable();
+            sqlTable.setVisible(true);
+        }
+        
+        if (e.getSource() == signOut) {
+            dbManager.closeConnection(); 
+            frame.dispose();
         }
         
         if (e.getSource() == search) {
             String destination = (String) toLocation.getSelectedItem();
-            if (destination != null) {
-                BookingPage page = new BookingPage(flightManager, destination);
-            }
+            Date departureDate = fromDate.getDate();
+            Date returnDate = toDate.getDate();
+            ServiceClass selectedClass = (ServiceClass) serviceClass.getSelectedItem();
+            Date currentDate = new Date();
             
-        
+            if (destination != null && departureDate != null && returnDate != null && selectedClass != null) {
+                if (departureDate.before(currentDate) || returnDate.before(currentDate)) {
+                    JOptionPane.showMessageDialog(frame, "No fares available for selected dates", "Invalid Date", JOptionPane.ERROR_MESSAGE);
+                } else if (returnDate.before(departureDate)) {
+                    JOptionPane.showMessageDialog(frame, "Return date cannot be before departure date.", "Invalid Date", JOptionPane.ERROR_MESSAGE);
+                } 
+                else {
+                BookingPage page = new BookingPage(flightManager, loggedInAccount, destination, departureDate, returnDate, selectedClass);
+                    }
+                } else {
+                JOptionPane.showMessageDialog(frame, "Please fill all the fields.", "Incomplete Information", JOptionPane.WARNING_MESSAGE);
+            }
         }
-    }
+    }    
 }

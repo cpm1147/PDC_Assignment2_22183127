@@ -30,6 +30,15 @@ public class AccountManager {
         return false;
     }
     
+    public Account getAccountByUsername(String username) {
+    for(Account account : accounts) {
+        if(account.getUsername().equals(username)) {
+            return account;
+        }
+    }
+        return null; 
+    }
+
     public boolean passwordChecker(String username, String password) {
         for(Account account : accounts) {
             if(account.getUsername().equals(username) && account.getPassword().equals(password)) {

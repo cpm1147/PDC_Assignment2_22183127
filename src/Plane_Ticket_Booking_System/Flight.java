@@ -6,6 +6,9 @@ package Plane_Ticket_Booking_System;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -16,14 +19,16 @@ public class Flight {
     String destination;
     String planeId;
     String departureTime;
-    private List<Seat> seats;
+    private Map<Date, List<Seat>> seatAvailability;
+    private Map<Date, List<String>> bookedSeatsByDate;
     
     public Flight(String origin, String destination, String planeId, String departureTime) {
         this.origin = origin;
         this.destination = destination;
         this.planeId = planeId;
         this.departureTime = departureTime;
-        this.seats = initializeSeats();
+        this.seatAvailability = new HashMap<>();
+        this.bookedSeatsByDate = new HashMap<>();
     }
 
     private List<Seat> initializeSeats() {
@@ -43,7 +48,6 @@ public class Flight {
         return origin;
     }
 
-    
     public void setOrigin(String origin) {
         this.origin = origin;
     }
@@ -55,31 +59,40 @@ public class Flight {
     public String getDestination() {
         return destination;
     }
-    
-    
-    
-    public List<Seat> getSeats() {
-        return seats;
+
+    public String getPlaneId() {
+        return planeId;
     }
 
-    public Seat getSeatById(String seatId) {
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
+    public List<Seat> getSeats(Date date) {
+        return seatAvailability.computeIfAbsent(date, k -> initializeSeats());
+    }
+
+    public Seat getSeatById(Date date, String seatId) {
+        List<Seat> seats = getSeats(date);
         for (Seat seat : seats) {
             if (seat.getSeatId().equals(seatId)) {
                 return seat;
             }
         }
-        return null; 
+        return null;
     }
-
-    public boolean bookSeat(String seatId) {
-        Seat seat = getSeatById(seatId);
-        if (seat != null && seat.isAvailable()) {
+    
+    public boolean bookSeat(Date date, String seatId) {
+    List<Seat> seats = seatAvailability.computeIfAbsent(date, k -> initializeSeats());
+    for (Seat seat : seats) {
+        if (seat.getSeatId().equals(seatId) && seat.isAvailable()) {
             seat.setAvailability(false);
             return true;
         }
-        return false;
     }
-    
+    return false;
+}
+
     @Override
     public String toString(){
         return planeId + " " + departureTime;
