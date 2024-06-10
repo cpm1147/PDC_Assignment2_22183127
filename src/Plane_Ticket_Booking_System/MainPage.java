@@ -69,7 +69,7 @@ public class MainPage implements ActionListener{
         bookFlightLabel.setForeground(Color.white);        
                 
         String[] origin = {"Auckland"};
-        String[] destination = {"Melbourne", "Sydney"};
+        String[] destination = {"Melbourne", "Sydney", "Singapore", "Los Angeles", "Tokyo", "Hong Kong", "Bangkok", "Dubai", "Fiji"};
         
         fromLabel = new JLabel("From");
         fromLabel.setBounds(80, 40, 100, 40);
